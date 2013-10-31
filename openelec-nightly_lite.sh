@@ -57,6 +57,8 @@ dsystem="SYSTEM"
 dkmd5="KERNEL.md5"
 dsmd5="SYSTEM.md5"
 asystem=$dsystem
+
+arch=$(cat /etc/arch)
 mode="http://openelec.xbmcnightlybuilds.com/"$(echo $arch | sed -e 's/\..*//g')
 
 
@@ -65,7 +67,6 @@ mode="http://openelec.xbmcnightlybuilds.com/"$(echo $arch | sed -e 's/\..*//g')
 echo "Device Detected: `cat /etc/arch | sed 's/\./ /g' | awk '{print $1}'`"
 echo
 
-arch=$(cat /etc/arch)
 if [ "$arch" = "RPi.arm" ] ;
 then
 	temploc="/storage/downloads/xbmc-update"
