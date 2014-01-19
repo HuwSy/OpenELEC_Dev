@@ -160,16 +160,6 @@ spinner ()
     return 0
 }
 
-###### update script silently
-
-echo "Updating script..."
-curl --silent https://raw.github.com/HuwSy/OpenELEC_Dev/master/openelec-nightly_lite.sh > $temploc/tempscript
-if [ ! -z "`grep $temploc/tempscript -e \"OpenELEC_DEV\"`" ] ;
-then
-    mv $temploc/tempscript $0
-    echo "...script updated"
-fi
-
 
 ###### create the .update directory for OpenELEC
 
@@ -233,6 +223,17 @@ then
     mkdir -p $temploc
 else
     mkdir -p $temploc
+fi
+
+
+###### update script silently
+
+echo "Updating script..."
+curl --silent https://raw.github.com/HuwSy/OpenELEC_Dev/master/openelec-nightly_lite.sh > $temploc/tempscript
+if [ ! -z "`grep $temploc/tempscript -e \"OpenELEC_DEV\"`" ] ;
+then
+    mv $temploc/tempscript $0
+    echo "...script updated"
 fi
 
 
