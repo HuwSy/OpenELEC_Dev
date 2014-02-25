@@ -198,7 +198,7 @@ do
             unsetv
             sync
             sleep 2
-            /sbin/reboot
+            reboot
         elif [[ $reb = "N" || $reb = "n" ]] ;
         then
             echo
