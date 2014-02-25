@@ -608,7 +608,7 @@ then
     echo "Rebooting..."
     rm -rf $temploc
     sync
-    /sbin/reboot
+    reboot
 elif [[ "$reb" = "N" || "$reb" = "n" ]] ;
 then
     sleep 1
