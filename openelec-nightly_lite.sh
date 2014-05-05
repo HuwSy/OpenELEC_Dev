@@ -229,7 +229,7 @@ fi
 ###### if there are no builds avaliable on the server for your specific architecture, we are going to notify you, and gracefully exit
 ###### also captures remote filename & extension to be used at later times
 
-ar="\"OpenELEC-${arch//\./\.}-devel-[0-9]*-r[0-9]*[-]*[0-9A-Za-z]*\.ta[^im]*\""
+ar="\"OpenELEC[_0-9A-Za-z\-]*${arch//\./\.}[_0-9A-Za-z\-]*-[0-9]*-r[0-9]*[-]*[0-9A-Za-z]*\.ta[^im]*\""
 file=""
 url=""
 latest=0
