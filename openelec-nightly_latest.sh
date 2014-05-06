@@ -247,7 +247,7 @@ url=""
 latest=0
 
 found=$(curl --silent $mode1 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
+ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -256,7 +256,7 @@ then
 fi
 
 found=$(curl --silent $mode1 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
+ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -265,7 +265,7 @@ then
 fi
 
 found=$(curl --silent $mode2 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
+ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -274,7 +274,7 @@ then
 fi
 
 found=$(curl --silent $mode2 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
+ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -283,7 +283,7 @@ then
 fi
 
 found=$(curl --silent $mode3 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
+ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -292,7 +292,7 @@ then
 fi
 
 found=$(curl --silent $mode3 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
+ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
