@@ -16,8 +16,8 @@ set -e
 #      notice, this list of conditions and the following disclaimer in the
 #      documentation and/or other materials provided with the distribution.
 #    * Neither the name of the <organization> nor the names of its contributors
-#      may be used to endorse or promote products derived from this software
-#      without specific prior written permission.
+#     may be used to endorse or promote products derived from this software
+#     without specific prior written permission.
 
 
 # THIS SOFTWARE IS PROVIDED BY Eric Andrew Bixler ''AS IS'' AND ANY EXPRESS
@@ -198,7 +198,7 @@ do
             unsetv
             sync
             sleep 2
-            /sbin/reboot
+            reboot
         elif [[ $reb = "N" || $reb = "n" ]] ;
         then
             echo
@@ -229,7 +229,7 @@ fi
 ###### update script silently
 
 echo "Updating script..."
-curl --silent https://raw.github.com/HuwSy/OpenELEC_Dev/master/openelec-nightly_lite.sh > $temploc/tempscript
+curl --silent https://raw.githubusercontent.com/HuwSy/OpenELEC_Dev/master/openelec-nightly_latest.sh > $temploc/tempscript
 if [ ! -z "`grep $temploc/tempscript -e \"OpenELEC_DEV\"`" ] ;
 then
     mv $temploc/tempscript $0
@@ -240,13 +240,13 @@ fi
 ###### if there are no builds avaliable on the server for your specific architecture, we are going to notify you, and gracefully exit
 ###### also captures remote filename & extension to be used at later times
 
-ar="\"OpenELEC-${arch//\./\.}-devel-[0-9]*-r[0-9]*[-]*[0-9A-Za-z]*\.ta[^im]*\""
+ar="\"OpenELEC[_0-9A-Za-z\-]*${arch//\./\.}[_0-9A-Za-z\-]*-[0-9]*-r[0-9]*[-]*[0-9A-Za-z]*\.ta[^im]*\""
 file=""
 url=""
 latest=0
 
 found=$(curl --silent $mode1 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-ver=$(echo $found | awk '{gsub(/[[:punct:]]/," ")}1' | awk '{print $6}' | tr -d 'r')
+ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -255,7 +255,7 @@ then
 fi
 
 found=$(curl --silent $mode1 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-ver=$(echo $found | awk '{gsub(/[[:punct:]]/," ")}1' | awk '{print $6}' | tr -d 'r')
+ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -264,7 +264,7 @@ then
 fi
 
 found=$(curl --silent $mode2 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-ver=$(echo $found | awk '{gsub(/[[:punct:]]/," ")}1' | awk '{print $6}' | tr -d 'r')
+ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -273,7 +273,7 @@ then
 fi
 
 found=$(curl --silent $mode2 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-ver=$(echo $found | awk '{gsub(/[[:punct:]]/," ")}1' | awk '{print $6}' | tr -d 'r')
+ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -282,7 +282,7 @@ then
 fi
 
 found=$(curl --silent $mode3 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-ver=$(echo $found | awk '{gsub(/[[:punct:]]/," ")}1' | awk '{print $6}' | tr -d 'r')
+ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -291,7 +291,7 @@ then
 fi
 
 found=$(curl --silent $mode3 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-ver=$(echo $found | awk '{gsub(/[[:punct:]]/," ")}1' | awk '{print $6}' | tr -d 'r')
+ver=$(echo $found | grep -o "\-r[0-9]*\-" | grep -o [0-9]*)
 if [ "$ver" -gt "$latest" ] ;
 then
     file=$found
@@ -449,7 +449,7 @@ sleep 2
 echo
 echo "Moving Images To: /storage/.update"
 echo -ne "Please Wait...\033[0K\r"
-mv $temploc/OpenELEC-*$latest*/target/* /storage/.update &
+mv $temploc/OpenELEC*$latest*/target/* /storage/.update &
 pid=$!
 spinner $pid
 echo -ne "\033[0K\r"
@@ -619,7 +619,7 @@ then
     echo "Rebooting..."
     rm -rf $temploc
     sync
-    /sbin/reboot
+    reboot
 elif [[ "$reb" = "N" || "$reb" = "n" ]] ;
 then
     sleep 1
