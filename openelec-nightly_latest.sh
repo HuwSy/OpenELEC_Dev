@@ -233,6 +233,7 @@ curl --silent https://raw.githubusercontent.com/HuwSy/OpenELEC_Dev/master/openel
 if [ ! -z "`grep $temploc/tempscript -e \"OpenELEC_DEV\"`" ] ;
 then
     mv $temploc/tempscript $0
+    chmod +x $0
     echo "...script updated"
 fi
 
@@ -298,6 +299,9 @@ then
     url=$mode3$found
     latest=$ver
 fi
+
+echo "Found: "$latest
+echo "Source: "$url
 
 if [[ "$latest" = "0" ]] ;
 then
