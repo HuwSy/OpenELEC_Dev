@@ -52,7 +52,7 @@ arch=$(cat /etc/arch)
 instruction_set=$(cat /etc/arch | sed 's/\./ /g' | awk '{print $2}')
 version=$(cat /etc/version | awk '{gsub(/[[:punct:]]/," ")}1' | awk '{print $3}' | tr -d 'r')
 
-mode1="http://mirrors.xbmcnightlybuilds.com/OpenELEC_DEV_BUILDS/"$(echo $arch | sed -e 's/\..*//g')"/"
+mode1="http://milhouse.openelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
 mode2="http://openelec.thestateofme.com/dev_builds/"
 mode3="http://snapshots.openelec.tv/"
 
@@ -229,8 +229,11 @@ fi
 ###### update script silently
 
 echo "Updating script..."
-curl --silent https://raw.githubusercontent.com/HuwSy/OpenELEC_Dev/master/openelec-nightly_latest.sh > $temploc/tempscript
-if [ ! -z "`grep $temploc/tempscript -e \"OpenELEC_DEV\"`" ] ;
+curl --silent 
+https://raw.githubusercontent.com/HuwSy/OpenELEC_Dev/master/openelec-nightly_latest.sh 
+> $temploc/tempscript
+if [ ! -z "`grep $temploc/tempscript -e 
+\"OpenELEC_DEV\"`" ] ;
 then
     mv $temploc/tempscript $0
     chmod +x $0
@@ -241,7 +244,7 @@ fi
 ###### if there are no builds avaliable on the server for your specific architecture, we are going to notify you, and gracefully exit
 ###### also captures remote filename & extension to be used at later times
 
-ar="\"OpenELEC[_0-9A-Za-z\-]*${arch//\./\.}[_0-9A-Za-z\-]*-[0-9]*-r[0-9]*[-]*[0-9A-Za-z]*\.ta[^im]*\""
+ar="\"OpenELEC[_0-9A-Za-z\-]*${arch//\./\.}[_0-9A-Za-z\-\.]*-[0-9]*-r[0-9]*[-]*[0-9A-Za-z]*\.ta[^im]*\""
 file=""
 url=""
 latest=0
