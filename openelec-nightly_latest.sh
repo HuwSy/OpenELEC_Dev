@@ -48,9 +48,10 @@ dkmd5="KERNEL.md5"
 dsmd5="SYSTEM.md5"
 asystem=$dsystem
 
+num="\-[0-9]*-"
 arch=$(cat /etc/arch)
 instruction_set=$(cat /etc/arch | sed 's/\./ /g' | awk '{print $2}')
-version=$(cat /etc/version | awk '{gsub(/[[:punct:]]/," ")}1' | awk '{print $3}' | tr -d 'r')
+version=$(cat /etc/version | grep -o $num | grep -o [0-9]*)
 
 mode1="http://milhouse.openelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
 mode2="http://openelec.thestateofme.com/dev_builds/"
@@ -139,6 +140,7 @@ unsetv ()
     unset ver
     unset found
     unset version
+    unset num
 }
 
 
@@ -241,14 +243,14 @@ fi
 ###### if there are no builds avaliable on the server for your specific architecture, we are going to notify you, and gracefully exit
 ###### also captures remote filename & extension to be used at later times
 
-ar="\"OpenELEC[_0-9A-Za-z\-]*${arch//\./\.}[_0-9A-Za-z\-\.]*-[0-9]*-r[0-9]*[-]*[0-9A-Za-z]*\.ta[^im]*\""
+ar="\"OpenELEC.*${arch//\./\.}-[0-9].*\.ta[^im]*\""
 file=""
 url=""
 latest=0
 
 {
     found=$(curl --silent $mode1 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-    ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -257,7 +259,7 @@ latest=0
     fi
     
     found=$(curl --silent $mode1 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-    ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -270,7 +272,7 @@ latest=0
 
 {
     found=$(curl --silent $mode2 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-    ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -279,7 +281,7 @@ latest=0
     fi
     
     found=$(curl --silent $mode2 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-    ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -292,7 +294,7 @@ latest=0
 
 {
     found=$(curl --silent $mode3 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-    ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -301,7 +303,7 @@ latest=0
     fi
     
     found=$(curl --silent $mode3 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-    ver=$(echo $found | grep -o "\-r[0-9]*" | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
