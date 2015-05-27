@@ -229,11 +229,8 @@ fi
 ###### update script silently
 
 echo "Updating script..."
-curl --silent 
-https://raw.githubusercontent.com/HuwSy/OpenELEC_Dev/master/openelec-nightly_latest.sh 
-> $temploc/tempscript
-if [ ! -z "`grep $temploc/tempscript -e 
-\"OpenELEC_DEV\"`" ] ;
+curl --silent https://raw.githubusercontent.com/HuwSy/OpenELEC_Dev/master/openelec-nightly_latest.sh > $temploc/tempscript
+if [ ! -z "`grep $temploc/tempscript -e \"OpenELEC_DEV\"`" ] ;
 then
     mv $temploc/tempscript $0
     chmod +x $0
