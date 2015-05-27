@@ -431,8 +431,8 @@ else
     echo
     echo ">>>| OpenELEC"
     echo "No Updates Available."
-    echo "Local:   $version          Compiled: `cat /etc/version | cut -f 2-2 -d'-' | sed 's/......$//;s/./& /4' | sed 's/./& /7' | awk '{ print "[ "$1"-"$2"-"$3" ]" }'`"
-    echo "Remote:  $latest           Compiled: `echo $file | cut -f 4-4 -d'-' | sed 's/......$//;s/./& /4' | sed 's/./& /7' | awk '{ print "[ "$1"-"$2"-"$3" ]" }'`"
+    echo "Local:   $version"
+    echo "Remote:  $latest"
     echo
     echo "You are on the latest build for your platform [`cat /etc/arch`]"
     echo "Check again later."
