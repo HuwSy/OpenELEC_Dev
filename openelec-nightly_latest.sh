@@ -48,10 +48,8 @@ dkmd5="KERNEL.md5"
 dsmd5="SYSTEM.md5"
 asystem=$dsystem
 
-num="\-[0-9]*-"
-arch=$(cat /etc/arch)
-instruction_set=$(cat /etc/arch | sed 's/\./ /g' | awk '{print $2}')
-version=$(cat /etc/version | grep -o $num | grep -o [0-9]*)
+arch=$(cat /etc/release | grep -o ^[^-]*)
+version=$(cat /etc/release | sed -e 's/^[^-]*\-[^-]*\-//g' | grep -o ^[0-9]*)
 
 mode1="http://milhouse.openelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
 mode2="http://openelec.thestateofme.com/dev_builds/"
@@ -140,7 +138,6 @@ unsetv ()
     unset ver
     unset found
     unset version
-    unset num
 }
 
 
@@ -250,7 +247,7 @@ latest=0
 
 {
     found=$(curl --silent $mode1 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o \-[0-9]*- | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -259,7 +256,7 @@ latest=0
     fi
     
     found=$(curl --silent $mode1 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o \-[0-9]*- | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -272,7 +269,7 @@ latest=0
 
 {
     found=$(curl --silent $mode2 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o \-[0-9]*- | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -281,7 +278,7 @@ latest=0
     fi
     
     found=$(curl --silent $mode2 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o \-[0-9]*- | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -294,7 +291,7 @@ latest=0
 
 {
     found=$(curl --silent $mode3 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o \-[0-9]*- | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -303,7 +300,7 @@ latest=0
     fi
     
     found=$(curl --silent $mode3 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o \-[0-9]*- | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
         file=$found
@@ -316,8 +313,8 @@ latest=0
 
 if [[ "$latest" = "0" ]] ;
 then
-    echo "There are either no available builds for your architecture at this time, or"
-    echo "the only build avaliable is the same revision you are already on."
+    echo "There are either no available builds for your architecture at this time,"
+    echo "or the only build avaliable is the same revision you are already on."
     echo "Please check again later."
     echo
     echo "Exiting Now."
@@ -382,11 +379,10 @@ then
     echo -ne "\033[0K\r"
     echo ">>>| OpenELEC"
     echo "Updates Are Available."
-    echo "Local:   $version          Compiled: `cat /etc/version | grep -o $num | grep -o [0-9]* | sed 's/......$//;s/./& /4' | sed 's/./& /7' | awk '{ print "[ "$1"-"$2"-"$3" ]" }'`"
-    echo "Remote:  $latest           Compiled: `echo $file | grep -o $num | grep -o [0-9]* | sed 's/......$//;s/./& /4' | sed 's/./& /7' | awk '{ print "[ "$1"-"$2"-"$3" ]" }'`"
+    echo "Local:   $version"
+    echo "Remote:  $latest"
     echo
-    echo "`cat /etc/arch | sed 's/\./ /g' | awk '{print $1}'` Build Source:"
-    echo $url
+    echo "Build Source: $url"
     #curl -v -H "Content-type: application/json" -u $user:$pass -X POST -d '{"id":1,"jsonrpc":"2.0","method":"GUI.ShowNotification","params":{"title":"OpenELEC_Dev","message":"Update Found ! Remote Build: $latest","displaytime":8000}}' http://localhost:$port/jsonrpc
     echo
     ## The remote build is newer then our local build. Asking for input.
@@ -431,10 +427,10 @@ else
     echo
     echo ">>>| OpenELEC"
     echo "No Updates Available."
-    echo "Local:   $version          Compiled: `cat /etc/version | grep -o $num | grep -o [0-9]* | sed 's/......$//;s/./& /4' | sed 's/./& /7' | awk '{ print "[ "$1"-"$2"-"$3" ]" }'`"
-    echo "Remote:  $latest           Compiled: `echo $file | grep -o $num | grep -o [0-9]* | sed 's/......$//;s/./& /4' | sed 's/./& /7' | awk '{ print "[ "$1"-"$2"-"$3" ]" }'`"
+    echo "Local:   $version"
+    echo "Remote:  $latest"
     echo
-    echo "You are on the latest build for your platform [`cat /etc/arch`]"
+    echo "You are on the latest build for your platform $arch"
     echo "Check again later."
     echo
     rm -rf $temploc
