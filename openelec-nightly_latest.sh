@@ -48,7 +48,7 @@ dkmd5="KERNEL.md5"
 dsmd5="SYSTEM.md5"
 asystem=$dsystem
 
-num="-[0-9]*-"
+num="\-[0-9]*\-"
 arch=$(cat /etc/release | grep -o ^[^-]*)
 version=$(cat /etc/release | grep -o $num | grep -o [0-9]*)
 
