@@ -354,13 +354,13 @@ fi
 ###### variables used for GUI notifications
 
 ## xbmc webserver port
-port=$(cat /storage/.xbmc/userdata/guisettings.xml | grep "<webserverport>" | sed 's/[^0-9]*//g')
+#port=$(cat /storage/.xbmc/userdata/guisettings.xml | grep "<webserverport>" | sed 's/[^0-9]*//g')
 
 ## xbmc webserver password
-pass=$(cat /storage/.xbmc/userdata/guisettings.xml | grep "<webserverpassword>" | grep -Eio "[a-z]+" | sed -n 2p)
+#pass=$(cat /storage/.xbmc/userdata/guisettings.xml | grep "<webserverpassword>" | grep -Eio "[a-z]+" | sed -n 2p)
 
 ## xbmc webserver username
-user=$(cat /storage/.xbmc/userdata/guisettings.xml | grep "<webserverusername>" | grep -Eio "[a-z]+" | sed -n 2p)
+#user=$(cat /storage/.xbmc/userdata/guisettings.xml | grep "<webserverusername>" | grep -Eio "[a-z]+" | sed -n 2p)
 
 
 ###### compare local and remote revisions; decide if we have updates ready to donwload
@@ -586,23 +586,25 @@ echo "     In the need of an emergency rollback:"
 echo "-->  A backup copy of your *PREVIOUS* SYSTEM & KERNEL images [ revision $version ]"
 echo "     have been created here:  /storage/downloads/OpenELEC_r$version"
 echo
-echo
-echo "Creating a backup of your NEW [ SYSTEM & KERNEL ] images."
-echo -ne "Please Wait...\033[0K\r"
-mkdir -p /storage/downloads/OpenELEC_r$latest
-sleep 1
-cp /storage/.update/$dkernel /storage/.update/$dsystem /storage/.update/$dkmd5 /storage/.update/$dsmd5 /storage/downloads/OpenELEC_r$latest &
-pid=$!
-spinner $pid
-unset pid
-echo -ne "\033[0K\r"
-echo
-echo "     Important Notice"
-echo "--------------------------"
-echo "     In the need of an emergency rollback:"
-echo "-->  A backup copy of your *NEW* SYSTEM & KERNEL images [ revision $latest ]"
-echo "     have been created here:  /storage/downloads/OpenELEC_r$latest"
-echo
+
+#echo
+#echo "Creating a backup of your NEW [ SYSTEM & KERNEL ] images."
+#echo -ne "Please Wait...\033[0K\r"
+#mkdir -p /storage/downloads/OpenELEC_r$latest
+#sleep 1
+#cp /storage/.update/$dkernel /storage/.update/$dsystem /storage/.update/$dkmd5 /storage/.update/$dsmd5 /storage/downloads/OpenELEC_r$latest &
+#pid=$!
+#spinner $pid
+#unset pid
+#echo -ne "\033[0K\r"
+#echo
+#echo "     Important Notice"
+#echo "--------------------------"
+#echo "     In the need of an emergency rollback:"
+#echo "-->  A backup copy of your *NEW* SYSTEM & KERNEL images [ revision $latest ]"
+#echo "     have been created here:  /storage/downloads/OpenELEC_r$latest"
+#echo
+
 sleep 5
 
 
