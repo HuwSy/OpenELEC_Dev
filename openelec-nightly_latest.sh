@@ -180,7 +180,13 @@ do
         echo "KERNEL & SYSTEM are already in place."
         echo "You must reboot to complete the update."
         echo "Would you like to reboot now (y/n) ?"
-        read -n1 -p "==| " reb
+        if [ "$1" = "-f" ] ;
+        then
+            reb="Y"
+        else
+            read -n1 -p "==| " reb
+        fi
+        
         if [[ $reb != "Y" ]] && [[ $reb != "y" ]] && [[ $reb != "N" ]] && [[ $reb != "n" ]] ;
         then
             echo
@@ -389,7 +395,13 @@ then
     echo
     ## The remote build is newer then our local build. Asking for input.
     echo "Would you like to update (y/n) ?"
-    read -n1 -p "==| " yn
+    if [ "$1" = "-f" ] ;
+    then
+        yn="Y"
+    else
+        read -n1 -p "==| " yn
+    fi
+    
     if [[ $yn != "Y" ]] && [[ $yn != "y" ]] && [[ $yn != "N" ]] && [[ $yn != "n" ]] ;
     then
         echo
@@ -618,7 +630,13 @@ while true; do
 echo
 echo "You must reboot to finish the update."
 echo "Would you like to reboot now (y/n) ?"
-read -n1 -p "==| " reb
+if [ "$1" = "-f" ] ;
+then
+    reb="Y"
+else
+    read -n1 -p "==| " reb
+fi
+
 echo
 if [[ "$reb" != "Y" ]] && [[ "$reb" != "y" ]] && [[ "$reb" != "N" ]] && [[ "$reb" != "n" ]] ;
 then
