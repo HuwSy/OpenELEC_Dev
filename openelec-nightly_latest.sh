@@ -62,7 +62,7 @@ mode3="http://snapshots.openelec.tv/"
 echo "Device Detected: $arch"
 echo
 
-if [ "$arch" = "RPi.arm" ] ;
+if [ ${arch:0:3} == RPi ] ;
 then
     temploc="/storage/downloads/xbmc-update"
     akernel="kernel.img"
