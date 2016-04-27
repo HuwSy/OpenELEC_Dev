@@ -2,7 +2,7 @@
 set -e
 
 
-# "OpenELEC_DEV" ; An automated development build updater script for OpenELEC nightly builds
+# "(Open/Libre)ELEC_DEV" ; An automated development build updater script for nightly builds
 #
 # Copyright (c) February 2012, Eric Andrew Bixler
 # with some alterations made by HuwSy
@@ -53,8 +53,8 @@ arch=$(cat /etc/release | grep -o ^[^-]*)
 version=$(cat /etc/release | grep -o $num | grep -o [0-9]*)
 
 mode1="http://milhouse.openelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
-mode2="http://openelec.thestateofme.com/dev_builds/"
-mode3="http://snapshots.openelec.tv/"
+mode2="http://milhouse.libreelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
+mode3="http://openelec.thestateofme.com/dev_builds/"
 
 
 ###### set the temporary file location based on what device we are using...(the rPi does not have enough RAM to download the image to /dev/shm
@@ -162,7 +162,7 @@ spinner ()
 }
 
 
-###### create the .update directory for OpenELEC
+###### create the .update directory
 
 mkdir -p /storage/.update
 
@@ -248,7 +248,7 @@ fi
 ###### if there are no builds avaliable on the server for your specific architecture, we are going to notify you, and gracefully exit
 ###### also captures remote filename & extension to be used at later times
 
-ar="\"OpenELEC.*${arch//\./\.}-[0-9].*\.ta[^im]*\""
+ar="\".*ELEC.*${arch//\./\.}-[0-9].*\.ta[^im]*\""
 file=""
 url=""
 latest=0
@@ -333,12 +333,12 @@ fi
 
 
 ###### checking to make sure we are actually running an official development build. if we dont check this; the comparison routine will freak out if our local
-###### build is larger then the largest (newest) build on the official openelec snapshot server.
+###### build is larger then the largest (newest) build on the server.
 
 if [ "$latest" -lt "$version" ] ;
 then
     echo
-    echo "You are currently using an unofficial development build of OpenELEC."
+    echo "You are currently using an unofficial development build."
     echo "This isn't supported, and will yield unexpected results if we continue."
     echo "Your build is a higher revision then the highest available on the official"
     echo "snapshot server as seen here: "$mode
@@ -385,13 +385,13 @@ then
     echo -ne "Please Wait...\033[0K\r"
     sleep 2
     echo -ne "\033[0K\r"
-    echo ">>>| OpenELEC"
+    echo ">>>| "
     echo "Updates Are Available."
     echo "Local:   $version"
     echo "Remote:  $latest"
     echo
     echo "Build Source: $url"
-    #curl -v -H "Content-type: application/json" -u $user:$pass -X POST -d '{"id":1,"jsonrpc":"2.0","method":"GUI.ShowNotification","params":{"title":"OpenELEC_Dev","message":"Update Found ! Remote Build: $latest","displaytime":8000}}' http://localhost:$port/jsonrpc
+    #curl -v -H "Content-type: application/json" -u $user:$pass -X POST -d '{"id":1,"jsonrpc":"2.0","method":"GUI.ShowNotification","params":{"title":"(Open/Libre)ELEC_Dev","message":"Update Found ! Remote Build: $latest","displaytime":8000}}' http://localhost:$port/jsonrpc
     echo
     ## The remote build is newer then our local build. Asking for input.
     echo "Would you like to update (y/n) ?"
@@ -439,7 +439,7 @@ else
     ## remote build is not newer then what we've got already. Exit.
     echo -ne "\033[0K\r"
     echo
-    echo ">>>| OpenELEC"
+    echo ">>>| "
     echo "No Updates Available."
     echo "Local:   $version"
     echo "Remote:  $latest"
@@ -474,7 +474,7 @@ sleep 2
 echo
 echo "Moving Images To: /storage/.update"
 echo -ne "Please Wait...\033[0K\r"
-mv $temploc/OpenELEC*$latest*/target/* /storage/.update &
+mv $temploc/*ELEC*$latest*/target/* /storage/.update &
 pid=$!
 spinner $pid
 echo -ne "\033[0K\r"
@@ -506,8 +506,6 @@ else
     echo "Notify one of the developers in the Forums or IRC that"
     echo "the SYSTEM image is corrupt"
     echo
-    echo "IRC Webchat:"
-    echo "http://webchat.freenode.net/?channels=openelec"
     sleep 3
     rm -f /storage/.update/$dsystem
     rm -f /storage/.update/$dsmd5
@@ -528,8 +526,6 @@ else
     echo "Notify one of the developers in the Forums or IRC that"
     echo "the KERNEL image is corrupt"
     echo
-    echo "IRC Webchat:"
-    echo "http://webchat.freenode.net/?channels=openelec"
     sleep 3
     rm -f /storage/.update/$dkernel
     rm -f /storage/.update/$dkmd5
@@ -565,7 +561,7 @@ echo
 
 ###### remove old backup builds
 
-rm -rf /storage/downloads/OpenELEC_r*
+rm -rf /storage/downloads/*ELEC_r*
 
 
 ###### make sure 'downloads' exists; doesnt get created untill the "Downloads" smb share is accessed for the first time.
@@ -577,16 +573,16 @@ mkdir -p /storage/downloads
 
 echo "Creating a backup of your PREVIOUS [ SYSTEM & KERNEL ] images."
 echo -ne "Please Wait...\033[0K\r"
-mkdir /storage/downloads/OpenELEC_r$version
-cp /flash/$akernel /storage/downloads/OpenELEC_r$version/$dkernel
-cp /flash/$asystem /storage/downloads/OpenELEC_r$version/$dsystem
-chmod +x /storage/downloads/OpenELEC_r$version/$dkernel
-chmod +x /storage/downloads/OpenELEC_r$version/$dsystem
-md5sum /storage/downloads/OpenELEC_r$version/$dkernel > /storage/downloads/OpenELEC_r$version/$dkmd5 &
+mkdir /storage/downloads/ELEC_r$version
+cp /flash/$akernel /storage/downloads/ELEC_r$version/$dkernel
+cp /flash/$asystem /storage/downloads/ELEC_r$version/$dsystem
+chmod +x /storage/downloads/ELEC_r$version/$dkernel
+chmod +x /storage/downloads/ELEC_r$version/$dsystem
+md5sum /storage/downloads/ELEC_r$version/$dkernel > /storage/downloads/ELEC_r$version/$dkmd5 &
 pid=$!
 spinner $pid
 unset pid
-md5sum /storage/downloads/OpenELEC_r$version/$dsystem > /storage/downloads/OpenELEC_r$version/$dsmd5 &
+md5sum /storage/downloads/ELEC_r$version/$dsystem > /storage/downloads/ELEC_r$version/$dsmd5 &
 pid=$!
 spinner $pid
 unset pid
@@ -596,26 +592,8 @@ echo "     Important Notice"
 echo "--------------------------"
 echo "     In the need of an emergency rollback:"
 echo "-->  A backup copy of your *PREVIOUS* SYSTEM & KERNEL images [ revision $version ]"
-echo "     have been created here:  /storage/downloads/OpenELEC_r$version"
+echo "     have been created here:  /storage/downloads/ELEC_r$version"
 echo
-
-#echo
-#echo "Creating a backup of your NEW [ SYSTEM & KERNEL ] images."
-#echo -ne "Please Wait...\033[0K\r"
-#mkdir -p /storage/downloads/OpenELEC_r$latest
-#sleep 1
-#cp /storage/.update/$dkernel /storage/.update/$dsystem /storage/.update/$dkmd5 /storage/.update/$dsmd5 /storage/downloads/OpenELEC_r$latest &
-#pid=$!
-#spinner $pid
-#unset pid
-#echo -ne "\033[0K\r"
-#echo
-#echo "     Important Notice"
-#echo "--------------------------"
-#echo "     In the need of an emergency rollback:"
-#echo "-->  A backup copy of your *NEW* SYSTEM & KERNEL images [ revision $latest ]"
-#echo "     have been created here:  /storage/downloads/OpenELEC_r$latest"
-#echo
 
 sleep 5
 
