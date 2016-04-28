@@ -140,6 +140,7 @@ unsetv ()
     unset found
     unset version
     unset num
+    unset hostos
 }
 
 
@@ -248,7 +249,8 @@ fi
 ###### if there are no builds avaliable on the server for your specific architecture, we are going to notify you, and gracefully exit
 ###### also captures remote filename & extension to be used at later times
 
-ar="\"$host.*${arch//\./\.}-[0-9].*\.ta[^im]*\""
+hostos=$(cat /etc/hostname)
+ar="\"$hostos.*${arch//\./\.}-[0-9].*\.ta[^im]*\""
 file=""
 url=""
 latest=0
