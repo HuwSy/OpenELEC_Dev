@@ -446,7 +446,7 @@ else
     echo "Local:   $version"
     echo "Remote:  $latest"
     echo
-    echo "You are on the latest build for your platform $arch"
+    echo "You are on the latest build for your platform $hostos $arch"
     echo "Check again later."
     echo
     rm -rf $temploc
