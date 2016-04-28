@@ -2,7 +2,7 @@
 set -e
 
 
-# "(Open/Libre)ELEC_DEV" ; An automated development build updater script for nightly builds
+# "OpenELEC_DEV and LibreELEC_DEV" ; An automated development build updater script for nightly builds
 #
 # Copyright (c) February 2012, Eric Andrew Bixler
 # with some alterations made by HuwSy
