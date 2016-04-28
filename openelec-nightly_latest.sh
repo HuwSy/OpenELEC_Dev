@@ -237,7 +237,7 @@ fi
 
 echo "Updating script..."
 curl --silent https://raw.githubusercontent.com/HuwSy/OpenELEC_Dev/master/openelec-nightly_latest.sh > $temploc/tempscript
-if [ ! -z "`grep $temploc/tempscript -e \"OpenELEC_DEV\"`" ] ;
+if [ ! -z "`grep $temploc/tempscript -e \"ELEC_DEV\"`" ] ;
 then
     mv $temploc/tempscript $0
     chmod +x $0
@@ -248,7 +248,7 @@ fi
 ###### if there are no builds avaliable on the server for your specific architecture, we are going to notify you, and gracefully exit
 ###### also captures remote filename & extension to be used at later times
 
-ar="\".*ELEC.*${arch//\./\.}-[0-9].*\.ta[^im]*\""
+ar="\"$host.*${arch//\./\.}-[0-9].*\.ta[^im]*\""
 file=""
 url=""
 latest=0
@@ -573,16 +573,16 @@ mkdir -p /storage/downloads
 
 echo "Creating a backup of your PREVIOUS [ SYSTEM & KERNEL ] images."
 echo -ne "Please Wait...\033[0K\r"
-mkdir /storage/downloads/ELEC_r$version
-cp /flash/$akernel /storage/downloads/ELEC_r$version/$dkernel
-cp /flash/$asystem /storage/downloads/ELEC_r$version/$dsystem
-chmod +x /storage/downloads/ELEC_r$version/$dkernel
-chmod +x /storage/downloads/ELEC_r$version/$dsystem
-md5sum /storage/downloads/ELEC_r$version/$dkernel > /storage/downloads/ELEC_r$version/$dkmd5 &
+mkdir /storage/downloads/OS_r$version
+cp /flash/$akernel /storage/downloads/OS_r$version/$dkernel
+cp /flash/$asystem /storage/downloads/OS_r$version/$dsystem
+chmod +x /storage/downloads/OS_r$version/$dkernel
+chmod +x /storage/downloads/OS_r$version/$dsystem
+md5sum /storage/downloads/OS_r$version/$dkernel > /storage/downloads/OS_r$version/$dkmd5 &
 pid=$!
 spinner $pid
 unset pid
-md5sum /storage/downloads/ELEC_r$version/$dsystem > /storage/downloads/ELEC_r$version/$dsmd5 &
+md5sum /storage/downloads/OS_r$version/$dsystem > /storage/downloads/OS_r$version/$dsmd5 &
 pid=$!
 spinner $pid
 unset pid
@@ -592,7 +592,7 @@ echo "     Important Notice"
 echo "--------------------------"
 echo "     In the need of an emergency rollback:"
 echo "-->  A backup copy of your *PREVIOUS* SYSTEM & KERNEL images [ revision $version ]"
-echo "     have been created here:  /storage/downloads/ELEC_r$version"
+echo "     have been created here:  /storage/downloads/OS_r$version"
 echo
 
 sleep 5
