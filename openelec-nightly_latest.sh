@@ -48,6 +48,7 @@ dkmd5="KERNEL.md5"
 dsmd5="SYSTEM.md5"
 asystem=$dsystem
 
+hostos=$(cat /etc/hostname)
 num="\-[0-9]*\-"
 arch=$(cat /etc/release | grep -o ^[^-]*)
 version=$(cat /etc/release | grep -o $num | grep -o [0-9]*)
@@ -59,7 +60,7 @@ mode3="http://openelec.thestateofme.com/dev_builds/"
 
 ###### set the temporary file location based on what device we are using...(the rPi does not have enough RAM to download the image to /dev/shm
 
-echo "Device Detected: $arch"
+echo "Device Detected: $hostos $arch"
 echo
 
 if [ ${arch:0:3} == RPi ] ;
@@ -249,7 +250,6 @@ fi
 ###### if there are no builds avaliable on the server for your specific architecture, we are going to notify you, and gracefully exit
 ###### also captures remote filename & extension to be used at later times
 
-hostos=$(cat /etc/hostname)
 ar="\"$hostos.*${arch//\./\.}-[0-9].*\.ta[^im]*\""
 file=""
 url=""
