@@ -563,7 +563,7 @@ echo
 
 ###### remove old backup builds
 
-rm -rf /storage/downloads/*ELEC_r*
+rm -rf /storage/downloads/OS_r*
 
 
 ###### make sure 'downloads' exists; doesnt get created untill the "Downloads" smb share is accessed for the first time.
