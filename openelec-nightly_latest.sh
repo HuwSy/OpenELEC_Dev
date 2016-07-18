@@ -250,7 +250,7 @@ fi
 ###### if there are no builds avaliable on the server for your specific architecture, we are going to notify you, and gracefully exit
 ###### also captures remote filename & extension to be used at later times
 
-ar="\"[^\"]*$hostos[^\"]*${arch//\./\.}-[0-9]{1,2}[^\"]*\.ta[^im]*\""
+ar="\"[^\"]*$hostos[^\"]*${arch//\./\.}\-[0-9\.]*\-[^\"]*\.ta[^im]*\""
 file=""
 url=""
 latest=0
