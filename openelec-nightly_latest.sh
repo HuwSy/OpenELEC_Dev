@@ -57,10 +57,37 @@ mode1="http://milhouse.openelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*/
 mode2="http://milhouse.libreelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
 mode3="http://openelec.thestateofme.com/dev_builds/"
 
+if [[ $hostos != "OpenELEC" ]] && [[ $hostos != "LibreELEC" ]] ;
+then
+    echo "Host OS unknown, do you wish to upgrade to LibreELEC (y/n)?"
+    read_yn
+    
+    if [[ $yn = "Y" ]] ;
+    then
+        hostos="LibreELEC"
+    else
+        echo "Do you wish to upgrade to OpenELEC (y/n)?"
+        read_yn
+        
+        if [[ $yn = "Y" ]] ;
+        then
+            hostos="OpenELEC"
+        else
+            echo
+            echo
+            echo "Unknown OS unable to update."
+            echo "Exiting."
+            unsetv
+            exit 1
+        fi
+    fi
+fi
+echo
+
 
 ###### set the temporary file location based on what device we are using...(the rPi does not have enough RAM to download the image to /dev/shm
 
-echo "Device Detected: $hostos $arch"
+echo "Device: $hostos $arch"
 echo
 
 if [ ${arch:0:3} == RPi ] ;
@@ -83,6 +110,26 @@ then
 fi
 
 
+###### read yes/no questions or repeat
+
+read_yn ()
+{
+    read -n1 -p "==| " yn
+    if [[ $yn = "Y" || $yn = "y" ]] ;
+    then
+        yn="Y"
+    elif [[ $yn = "N" || $yn = "n" ]] ;
+    then
+        yn="N"
+    else
+        echo
+        echo "Unrecognised input (y/n)?"
+        read_yn
+    fi
+    echo
+}
+
+
 ###### removes temporary files that have been created if the user prematurly aborts the update process
 
 trap ctrl_c 2
@@ -91,11 +138,6 @@ ctrl_c ()
     echo -ne "\n\n"
     echo "User aborted process."
     echo -ne "SIGINT Interrupt caught"
-    echo -ne "\nTemporary files removed\n"
-    if [ -d $temploc ] ;
-    then
-        rm -rf $temploc
-    fi
     unsetv
     exit 1
 }
@@ -105,6 +147,12 @@ ctrl_c ()
 
 unsetv ()
 {
+    if [ -d $temploc ] ;
+    then
+        rm -rf $temploc
+        echo -ne "\nTemporary files removed\n"
+    fi
+    
     unset kern_return
     unset currentsys
     unset update_yes
@@ -129,7 +177,6 @@ unsetv ()
     unset pass
     unset user
     unset arch
-    unset reb
     unset alt
     unset pid
     unset yn
@@ -142,6 +189,9 @@ unsetv ()
     unset version
     unset num
     unset hostos
+    
+    sleep 1
+    sync
 }
 
 
@@ -172,56 +222,37 @@ mkdir -p /storage/.update
 ###### checking for a previous run :: if SYSTEM & KERNEL files are still in ~/.update then we havent rebooted since we last ran.
 ###### this check prevents us from redownloading the update package.
 
-while true;
-do
-    pending=$(ls /storage/.update/* 2> /dev/null | wc -l)
-    if [ "$pending" = "4" ] ;
+pending=$(ls /storage/.update/* 2> /dev/null | wc -l)
+if [ "$pending" = "4" ] ;
+then
+    echo
+    echo
+    echo "KERNEL & SYSTEM are already in place."
+    echo "You must reboot to complete the update."
+    echo "Would you like to reboot now (y/n) ?"
+    if [ "$1" = "-f" ] ;
+    then
+        yn="Y"
+    else
+        read_yn
+    fi
+    
+    if [[ $yn = "Y"  ]] ;
     then
         echo
         echo
-        echo "KERNEL & SYSTEM are already in place."
-        echo "You must reboot to complete the update."
-        echo "Would you like to reboot now (y/n) ?"
-        if [ "$1" = "-f" ] ;
-        then
-            reb="Y"
-        else
-            read -n1 -p "==| " reb
-        fi
-        
-        if [[ $reb != "Y" ]] && [[ $reb != "y" ]] && [[ $reb != "N" ]] && [[ $reb != "n" ]] ;
-        then
-            echo
-            echo
-            echo "Unrecognized Input."
-            sleep 1
-            echo "Please answer (y/n)"
-            continue
-        elif [[ $reb = "Y" || $reb = "y" ]] ;
-        then
-            echo
-            echo
-            echo
-            echo "Rebooting..."
-            rm -rf $temploc
-            unsetv
-            sync
-            sleep 2
-            reboot
-        elif [[ $reb = "N" || $reb = "n" ]] ;
-        then
-            echo
-            echo
-            echo "Please reboot to complete the update."
-            sleep 1
-            echo "Exiting."
-            rm -rf $temploc
-            unsetv
-            exit 0
-        fi
+        echo "Rebooting..."
+        unsetv
+        reboot
+    else
+        echo
+        echo
+        echo "Please reboot to complete the update."
+        echo "Exiting."
+        unsetv
+        exit 0
     fi
-    break
-done
+fi
 
 
 ###### delete the temporary working directory; create if doesnt exist
@@ -323,12 +354,13 @@ latest=0
 
 if [[ "$latest" = "0" ]] ;
 then
+    echo
+    echo
     echo "There are either no available builds for your architecture at this time,"
     echo "or the only build avaliable is the same revision you are already on."
     echo "Please check again later."
     echo
-    echo "Exiting Now."
-    rm -rf $temploc
+    echo "Exiting."
     unsetv
     exit 1
 fi
@@ -340,6 +372,7 @@ fi
 if [ "$latest" -lt "$version" ] ;
 then
     echo
+    echo
     echo "You are currently using an unofficial development build."
     echo "This isn't supported, and will yield unexpected results if we continue."
     echo "Your build is a higher revision then the highest available on the official"
@@ -350,10 +383,7 @@ then
     echo "Local:  $version"
     echo "Remote: $latest"
     echo
-    sleep 2
-    echo "Exiting Now."
-    echo
-    rm -rf $temploc
+    echo "Exiting."
     unsetv
     exit 1
 fi
@@ -401,22 +431,10 @@ then
     then
         yn="Y"
     else
-        read -n1 -p "==| " yn
+        read_yn
     fi
     
-    if [[ $yn != "Y" ]] && [[ $yn != "y" ]] && [[ $yn != "N" ]] && [[ $yn != "n" ]] ;
-    then
-        echo
-        echo
-        echo "Unrecognized Input."
-        sleep 2
-        echo "Please answer (y/n)"
-        echo "Exiting."
-        echo
-        rm -rf $temploc
-        unsetv
-        exit 1
-    elif [[ $yn = "Y" || $yn = "y" ]] ;
+    if [[ $yn = "Y"  ]] ;
     then
         sleep .5
         echo
@@ -425,15 +443,11 @@ then
         wget $url -P "$temploc"
         echo "Done!"
         sleep 1
-    elif [[ $yn = "N" || $yn = "n" ]] ;
-    then
+    else
         echo
         echo
         echo "User aborted process."
-        sleep 2
         echo "Exiting."
-        echo
-        rm -rf $temploc
         unsetv
         exit 0
     fi
@@ -447,11 +461,9 @@ else
     echo "Remote:  $latest"
     echo
     echo "You are on the latest build for your platform $hostos $arch"
-    echo "Check again later."
-    echo
-    rm -rf $temploc
+    echo "Exiting."
     unsetv
-    exit 0
+    exit 1
 fi
 
 
@@ -545,9 +557,10 @@ fi
 return=$(($kern_return+$sys_return))
 if [[ "$return" = "2" ]] ;
 then
+    echo
+    echo
     echo "md5 Mismatch Detected."
-    echo "Update Terminated."
-    rm -rf $temploc
+    echo "Exiting."
     unsetv
     exit 1
 fi
@@ -606,45 +619,34 @@ echo
 echo
 echo "Update Preperation Complete !"
 sleep 2
-while true; do
+
 echo
 echo "You must reboot to finish the update."
 echo "Would you like to reboot now (y/n) ?"
 if [ "$1" = "-f" ] ;
 then
-    reb="Y"
+    yn="Y"
 else
-    read -n1 -p "==| " reb
+    read_yn
 fi
 
 echo
-if [[ "$reb" != "Y" ]] && [[ "$reb" != "y" ]] && [[ "$reb" != "N" ]] && [[ "$reb" != "n" ]] ;
+
+if [[ $yn = "Y"  ]] ;
 then
     echo
-    echo "Unrecognized Input."
-    echo "Please answer (y/n)"
-    echo
-    continue
-elif [[ "$reb" = "Y" || "$reb" = "y" ]] ;
-then
-    sleep 1
     echo
     echo "Rebooting..."
-    rm -rf $temploc
-    sync
+    unsetv
     reboot
-elif [[ "$reb" = "N" || "$reb" = "n" ]] ;
-then
-    sleep 1
+else
     echo
-    echo "User aborted process."
+    echo
     echo "Please reboot to complete the update."
     echo "Exiting."
-    rm -rf $temploc
     unsetv
-    exit 1
+    exit 0
 fi
-done
 
 
 ## everything went well: we're done !
