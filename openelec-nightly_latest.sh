@@ -57,7 +57,30 @@ mode1="http://milhouse.openelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*/
 mode2="http://milhouse.libreelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
 mode3="http://openelec.thestateofme.com/dev_builds/"
 
-if [[ $hostos != "OpenELEC" ]] && [[ $hostos != "LibreELEC" ]] ;
+
+###### read yes/no questions or repeat
+
+read_yn ()
+{
+    read -n1 -p "==| " yn
+    if [[ $yn = "Y" || $yn = "y" ]] ;
+    then
+        yn="Y"
+    elif [[ $yn = "N" || $yn = "n" ]] ;
+    then
+        yn="N"
+    else
+        echo
+        echo "Unrecognised input (y/n)?"
+        read_yn
+    fi
+    echo
+}
+
+
+###### determine release
+
+if [[ $hostos != "OpenELEC" ]] && [[ $hostos != "LibreELEC" ] && [[ $hostos != "ELEC" ]] ;
 then
     echo "Host OS unknown, do you wish to upgrade to LibreELEC (y/n)?"
     read_yn
@@ -108,26 +131,6 @@ then
     temploc="/storage/downloads/xbmc-update"
     unset ram_mb
 fi
-
-
-###### read yes/no questions or repeat
-
-read_yn ()
-{
-    read -n1 -p "==| " yn
-    if [[ $yn = "Y" || $yn = "y" ]] ;
-    then
-        yn="Y"
-    elif [[ $yn = "N" || $yn = "n" ]] ;
-    then
-        yn="N"
-    else
-        echo
-        echo "Unrecognised input (y/n)?"
-        read_yn
-    fi
-    echo
-}
 
 
 ###### removes temporary files that have been created if the user prematurly aborts the update process
