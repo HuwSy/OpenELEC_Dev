@@ -80,7 +80,7 @@ read_yn ()
 
 ###### determine release
 
-if [[ $hostos != "OpenELEC" ]] && [[ $hostos != "LibreELEC" ] && [[ $hostos != "ELEC" ]] ;
+if [[ $hostos != "OpenELEC" ]] && [[ $hostos != "LibreELEC" ]] && [[ $hostos != "ELEC" ]] ;
 then
     echo "Host OS unknown, do you wish to upgrade to LibreELEC (y/n)?"
     if [ "$1" = "-f" ] ;
