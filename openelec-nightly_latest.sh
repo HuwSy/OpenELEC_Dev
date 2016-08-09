@@ -83,25 +83,31 @@ read_yn ()
 if [[ $hostos != "OpenELEC" ]] && [[ $hostos != "LibreELEC" ] && [[ $hostos != "ELEC" ]] ;
 then
     echo "Host OS unknown, do you wish to upgrade to LibreELEC (y/n)?"
-    read_yn
+    if [ "$1" = "-f" ] ;
+    then
+        yn="N"
+    else
+        read_yn
+    fi
     
     if [[ $yn = "Y" ]] ;
     then
         hostos="LibreELEC"
     else
         echo "Do you wish to upgrade to OpenELEC (y/n)?"
-        read_yn
+        if [ "$1" = "-f" ] ;
+        then
+            yn="N"
+        else
+            read_yn
+        fi
         
         if [[ $yn = "Y" ]] ;
         then
             hostos="OpenELEC"
         else
-            echo
-            echo
-            echo "Unknown OS unable to update."
-            echo "Exiting."
-            unsetv
-            exit 1
+            echo "Taking any latest"
+            hostos="ELEC"
         fi
     fi
 fi
