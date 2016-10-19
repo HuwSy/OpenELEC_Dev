@@ -80,7 +80,7 @@ read_yn ()
 read_ol ()
 {
     read -n1 -p "==| " yn
-    if [[ $yn = "O" || $yn = "o ]] ;
+    if [[ $yn = "O" || $yn = "o" ]] ;
     then
         hostos="OpenELEC"
     elif [[ $yn = "L" || $yn = "l" ]] ;
