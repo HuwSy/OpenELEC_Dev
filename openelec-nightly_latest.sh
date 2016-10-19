@@ -77,38 +77,36 @@ read_yn ()
     echo
 }
 
+read_ol ()
+{
+    read -n1 -p "==| " yn
+    if [[ $yn = "O" || $yn = "o ]] ;
+    then
+        hostos="OpenELEC"
+    elif [[ $yn = "L" || $yn = "l" ]] ;
+    then
+        hostos="LibreELEC"
+    elif [[ $yn = "A" || $yn = "a" ]] ;
+    then
+        hostos="ELEC"
+    else
+        echo
+        echo "Unrecognised input (o/l/a)?"
+        read_ol
+    fi
+    echo
+}
 
 ###### determine release
 
 if [[ $hostos != "OpenELEC" ]] && [[ $hostos != "LibreELEC" ]] && [[ $hostos != "ELEC" ]] ;
 then
-    echo "Host OS unknown, do you wish to upgrade to LibreELEC (y/n)?"
     if [ "$1" = "-f" ] ;
     then
-        yn="N"
+        hostos="ELEC"
     else
-        read_yn
-    fi
-    
-    if [[ $yn = "Y" ]] ;
-    then
-        hostos="LibreELEC"
-    else
-        echo "Do you wish to upgrade to OpenELEC (y/n)?"
-        if [ "$1" = "-f" ] ;
-        then
-            yn="N"
-        else
-            read_yn
-        fi
-        
-        if [[ $yn = "Y" ]] ;
-        then
-            hostos="OpenELEC"
-        else
-            echo "Taking any latest"
-            hostos="ELEC"
-        fi
+        echo "Host OS unknown, do you wish to upgrade to (L)ibreELEC (O)penELEC or (A)ny?"
+        read_ol
     fi
 fi
 echo
