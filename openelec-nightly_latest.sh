@@ -593,31 +593,31 @@ mkdir -p /storage/downloads
 
 ###### create a backup of our current, and new build for easy access if needed for a emergency rollback
 
-echo "Creating a backup of your PREVIOUS [ SYSTEM & KERNEL ] images."
-echo -ne "Please Wait...\033[0K\r"
-mkdir /storage/downloads/OS_r$version
-cp /flash/$akernel /storage/downloads/OS_r$version/$dkernel
-cp /flash/$asystem /storage/downloads/OS_r$version/$dsystem
-chmod +x /storage/downloads/OS_r$version/$dkernel
-chmod +x /storage/downloads/OS_r$version/$dsystem
-md5sum /storage/downloads/OS_r$version/$dkernel > /storage/downloads/OS_r$version/$dkmd5 &
-pid=$!
-spinner $pid
-unset pid
-md5sum /storage/downloads/OS_r$version/$dsystem > /storage/downloads/OS_r$version/$dsmd5 &
-pid=$!
-spinner $pid
-unset pid
-echo -ne "\033[0K\r"
-echo
-echo "     Important Notice"
-echo "--------------------------"
-echo "     In the need of an emergency rollback:"
-echo "-->  A backup copy of your *PREVIOUS* SYSTEM & KERNEL images [ revision $version ]"
-echo "     have been created here:  /storage/downloads/OS_r$version"
-echo
+#echo "Creating a backup of your PREVIOUS [ SYSTEM & KERNEL ] images."
+#echo -ne "Please Wait...\033[0K\r"
+#mkdir /storage/downloads/OS_r$version
+#cp /flash/$akernel /storage/downloads/OS_r$version/$dkernel
+#cp /flash/$asystem /storage/downloads/OS_r$version/$dsystem
+#chmod +x /storage/downloads/OS_r$version/$dkernel
+#chmod +x /storage/downloads/OS_r$version/$dsystem
+#md5sum /storage/downloads/OS_r$version/$dkernel > /storage/downloads/OS_r$version/$dkmd5 &
+#pid=$!
+#spinner $pid
+#unset pid
+#md5sum /storage/downloads/OS_r$version/$dsystem > /storage/downloads/OS_r$version/$dsmd5 &
+#pid=$!
+#spinner $pid
+#unset pid
+#echo -ne "\033[0K\r"
+#echo
+#echo "     Important Notice"
+#echo "--------------------------"
+#echo "     In the need of an emergency rollback:"
+#echo "-->  A backup copy of your *PREVIOUS* SYSTEM & KERNEL images [ revision $version ]"
+#echo "     have been created here:  /storage/downloads/OS_r$version"
+#echo
 
-sleep 5
+#sleep 5
 
 
 ###### ask if we want to reboot now
