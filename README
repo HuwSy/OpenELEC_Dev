@@ -8,8 +8,8 @@ normally requiring minimal input. It can be run off most available architecture 
 available sources. These are;
 
 http://milhouse.openelec.tv/builds/master/
+http://milhouse.libreelec.tv/builds/master/
 http://openelec.thestateofme.com/dev_builds/
-http://snapshots.openelec.tv/
 
 The script has a mechanism which will always keep itself up-to-date, so you only need to download it once.
 anytime i push an update it will replace the old version.
