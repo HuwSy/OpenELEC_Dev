@@ -447,7 +447,8 @@ then
         echo
         echo
         echo "Downloading Image: $url to $temploc"
-        wget $url -P "$temploc"
+        curl -O $url
+        mv $file "$temploc/"
         echo "Done!"
         sleep 1
     else
