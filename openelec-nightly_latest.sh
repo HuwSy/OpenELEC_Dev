@@ -250,6 +250,8 @@ then
         echo
         echo "Rebooting..."
         unsetv
+        sync
+        umount /media/*
         reboot
     else
         echo
@@ -646,6 +648,8 @@ then
     echo
     echo "Rebooting..."
     unsetv
+    sync
+    umount /media/*
     reboot
 else
     echo
