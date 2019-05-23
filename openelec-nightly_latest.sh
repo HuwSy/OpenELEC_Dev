@@ -449,7 +449,7 @@ then
         echo
         echo
         echo "Downloading Image: $url to $temploc"
-        curl -O $url
+        curl -O ${url//#/%23}
         mv $file "$temploc/"
         echo "Done!"
         sleep 1
