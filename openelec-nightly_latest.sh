@@ -300,7 +300,7 @@ latest=0
     ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
-        file=$found
+        file=${found//#/%23}
         url=$mode1$found
         latest=$ver
     fi
@@ -309,7 +309,7 @@ latest=0
     ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
-        file=$found
+        file=${found//#/%23}
         url=$mode1$found
         latest=$ver
     fi
@@ -322,7 +322,7 @@ latest=0
     ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
-        file=$found
+        file=${found//#/%23}
         url=$mode2$found
         latest=$ver
     fi
@@ -331,7 +331,7 @@ latest=0
     ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
-        file=$found
+        file=${found//#/%23}
         url=$mode2$found
         latest=$ver
     fi
@@ -344,7 +344,7 @@ latest=0
     ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
-        file=$found
+        file=${found//#/%23}
         url=$mode3$found
         latest=$ver
     fi
@@ -353,7 +353,7 @@ latest=0
     ver=$(echo $found | grep -o $num | grep -o [0-9]*)
     if [ "$ver" -gt "$latest" ] ;
     then
-        file=$found
+        file=${found//#/%23}
         url=$mode3$found
         latest=$ver
     fi
