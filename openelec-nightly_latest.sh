@@ -55,7 +55,7 @@ version=$(cat /etc/release | grep -o $num | grep -o [0-9]*)
 
 mode1="http://milhouse.openelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
 mode2="http://milhouse.libreelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
-mode3="http://openelec.thestateofme.com/dev_builds/"
+mode3="https://test.libreelec.tv/"
 
 
 ###### read yes/no questions or repeat
