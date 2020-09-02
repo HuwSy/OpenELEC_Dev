@@ -297,7 +297,7 @@ latest=0
 
 {
     found=$(curl --silent $mode1 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o 20[0-3][0-9][0-1][0-9][0-3][0-9])
     if [ "$ver" -gt "$latest" ] ;
     then
         file=${found//#/%23}
@@ -306,7 +306,7 @@ latest=0
     fi
     
     found=$(curl --silent $mode1 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o 20[0-3][0-9][0-1][0-9][0-3][0-9])
     if [ "$ver" -gt "$latest" ] ;
     then
         file=${found//#/%23}
@@ -319,7 +319,7 @@ latest=0
 
 {
     found=$(curl --silent $mode2 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o 20[0-3][0-9][0-1][0-9][0-3][0-9])
     if [ "$ver" -gt "$latest" ] ;
     then
         file=${found//#/%23}
@@ -328,7 +328,7 @@ latest=0
     fi
     
     found=$(curl --silent $mode2 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o 20[0-3][0-9][0-1][0-9][0-3][0-9])
     if [ "$ver" -gt "$latest" ] ;
     then
         file=${found//#/%23}
@@ -341,7 +341,7 @@ latest=0
 
 {
     found=$(curl --silent $mode3 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | head -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o 20[0-3][0-9][0-1][0-9][0-3][0-9])
     if [ "$ver" -gt "$latest" ] ;
     then
         file=${found//#/%23}
@@ -350,7 +350,7 @@ latest=0
     fi
     
     found=$(curl --silent $mode3 | grep -o $ar | sed -e 's/"//g' | sed -e 's/\/ATV\///' | sed -e 's/\/Fusion\///' | sed -e 's/\/Generic\///' | sed -e 's/\/Intel\///' | sed -e 's/\/ION\///' | sed -e 's/\/RPi\///' | sed -e 's/\/Virtual\///' | tail -n 1)
-    ver=$(echo $found | grep -o $num | grep -o [0-9]*)
+    ver=$(echo $found | grep -o $num | grep -o 20[0-3][0-9][0-1][0-9][0-3][0-9])
     if [ "$ver" -gt "$latest" ] ;
     then
         file=${found//#/%23}
