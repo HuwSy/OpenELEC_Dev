@@ -51,7 +51,7 @@ asystem=$dsystem
 hostos=$(cat /etc/hostname)
 num="\-[0-9]*\-"
 arch=$(cat /etc/release | grep -o ^[^-]*)
-version=$(cat /etc/release | grep -o $num | grep -o [0-9]*)
+version=$(cat /etc/release | grep -o $num | grep -o "[0-9]*")
 
 mode1="http://milhouse.openelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
 mode2="http://milhouse.libreelec.tv/builds/master/"$(echo $arch | sed -e 's/\..*//g')"/"
